@@ -69,6 +69,23 @@ app.get('/home', (req, res) => {
   });
 });
 
+app.get('/getTrainigHistory', (req, res) => {
+  fs.readFile('results.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error reading file');
+      return;
+    }
+
+    // Разбираем данные в JSON
+    const existingData = JSON.parse(data);
+    
+    res.send(existingData);
+  });
+});
+
+
+
 app.get('/terminal', (req, res) => {
   const markdownFilePath = path.join(__dirname, 'public', 'terminal.md');
 

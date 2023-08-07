@@ -2,13 +2,16 @@
 <html>
   <head>
     <title>English word training</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div id="result"></div>
     <div id="inputSection">
-      <button onclick="start()">Start</button>
+      <button onclick="start()">start</button>
+      <button onclick="getTrainigHistory()">history</button>
     </div>
     <div id="currentWord"></div>
+    <canvas id="myChart" width="1100" height="150"></canvas>
 
     <script>
       var input = `
@@ -29,6 +32,8 @@
       var currentWordDiv = document.getElementById('currentWord');
 
       function start() {
+        var chart = document.getElementById('myChart');
+        chart.style.display = 'none';
         if (currentWordIndex === 0) {
           currentWordDiv.innerHTML = `<h3>Current word: ${keys[currentWordIndex]}</h3>`;
         }
@@ -36,6 +41,7 @@
       }
 
       function checkMessage() {
+        
         var userInput = document.getElementById('userInput').value;
         var currentWord = wordsArray[keys[currentWordIndex]];
 
@@ -68,7 +74,7 @@
                 `;
           var date = new Date();
           var jsonRes = {
-            correct: trueCount ,
+            correct: trueCount,
             wrong: falseCount,
             date:
               date.getDate() +
@@ -83,8 +89,6 @@
               ':' +
               date.getSeconds(),
           };
-          console.log(jsonRes);
-
           saveResultsOnServer(jsonRes);
         }
       }
@@ -98,7 +102,6 @@
           body: JSON.stringify(jsonRes),
         })
           .then((response) => {
-            console.log(response);
             if (response.ok) {
               console.log('Results saved on server');
             } else {
@@ -107,6 +110,61 @@
           })
           .catch((error) => {
             console.error('Error:', error);
+          });
+      }
+
+      function getTrainigHistory() {
+        fetch('http://localhost:3000/getTrainigHistory')
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            const dates = data.map((item) => item.date);
+            const correct = data.map((item) => item.correct);
+            const wrong = data.map((item) => item.wrong);
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+              type: 'line', // Use a line chart
+              data: {
+                labels: dates,
+                datasets: [
+                  {
+                    label: 'Correct Answers',
+                    data: wrong,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                  },
+                  {
+                    label: 'Wrong Answers',
+                    data: correct,
+                    borderColor: 'rgba(255, 11, 132, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  x: {
+                    display: true,
+                    title: {
+                      display: true,
+                      text: 'Date',
+                    },
+                  },
+                  y: {
+                    beginAtZero: true,
+                    display: true,
+                    title: {
+                      display: true,
+                      text: 'Count',
+                    },
+                  },
+                },
+              },
+            });
           });
       }
     </script>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>English word training</title>
+  </head>
+  <body>
+    <div id="result"></div>
+    <div id="inputSection">
+      <button onclick="start()">Start</button>
+    </div>
+    <div id="currentWord"></div>
+
+    <script>
+      var input = `
+            <input type="text" id="userInput" placeholder="write a word">
+            <button onclick="checkMessage()">check</button>
+        `;
+      var wordsArray = {
+        a: 'o',
+        about: 'despre',
+        accept: 'accepta',
+        // Добавьте другие слова в словарь
+      };
+
+      var keys = Object.keys(wordsArray);
+      var falseCount = 0;
+      var trueCount = 0;
+      var currentWordIndex = 0;
+      var currentWordDiv = document.getElementById('currentWord');
+
+      function start() {
+        if (currentWordIndex === 0) {
+          currentWordDiv.innerHTML = `<h3>Current word: ${keys[currentWordIndex]}</h3>`;
+        }
+        inputSection.innerHTML = input;
+      }
+
+      function checkMessage() {
+        var userInput = document.getElementById('userInput').value;
+        var currentWord = wordsArray[keys[currentWordIndex]];
+
+        var resultDiv = document.getElementById('result');
+        var inputSection = document.getElementById('inputSection');
+
+        currentWordIndex++;
+        if (currentWordIndex < keys.length) {
+          currentWordDiv.innerHTML = `<h3>Current word: ${keys[currentWordIndex]}</h3>`;
+        }
+
+        if (userInput === currentWord) {
+          trueCount++;
+          resultDiv.innerHTML = '<span style="color: green;">GJ!</span>';
+        } else {
+          falseCount++;
+          resultDiv.innerHTML = `
+                    <p style="color: red;">Wrong.</p>
+                    <p>Correct word: ${currentWord}</p>
+                `;
+        }
+
+        if (currentWordIndex < keys.length) {
+          inputSection.innerHTML = input;
+        } else {
+          inputSection.innerHTML = 'Training is over';
+          currentWordDiv.innerHTML = `
+                    <p>Correct: ${trueCount}</p>
+                    <p>Wrong: ${falseCount}</p>
+                `;
+          var date = new Date();
+          var jsonRes = {
+            correct: trueCount ,
+            wrong: falseCount,
+            date:
+              date.getDate() +
+              '.' +
+              (date.getMonth() + 1) +
+              '.' +
+              date.getFullYear() +
+              ' ' +
+              date.getHours() +
+              ':' +
+              date.getMinutes() +
+              ':' +
+              date.getSeconds(),
+          };
+          console.log(jsonRes);
+
+          saveResultsOnServer(jsonRes);
+        }
+      }
+
+      function saveResultsOnServer(jsonRes) {
+        fetch('http://localhost:3000/saveResults', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jsonRes),
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.ok) {
+              console.log('Results saved on server');
+            } else {
+              console.error('Failed to save results on server');
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      }
+    </script>
+  </body>
+</html>

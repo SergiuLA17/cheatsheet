@@ -1,0 +1,18 @@
+apiVersion: 'apps/v1'
+kind: 'Deployment'
+metadata:
+  name: 'chatsheet'
+spec:
+  selector:
+    matchLabels:
+      app: 'chatsheet'
+  replicas: 1
+  template:
+    metadata:
+      name: 'chatsheet'
+      labels:
+        app: 'chatsheet'
+    spec:
+      containers:
+        - name: 'chatsheet'
+          image: 'bloodysoon/chatsheet:0.0.3'

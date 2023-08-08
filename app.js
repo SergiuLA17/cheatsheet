@@ -105,7 +105,7 @@ app.post('/saveResults', (req, res) => {
   const results = req.body;
 
 
-  fs.readFile('fatures/results.json', 'utf8', (err, data) => {
+  fs.readFile('public/results.json', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error reading file');
@@ -117,7 +117,7 @@ app.post('/saveResults', (req, res) => {
 
     const jsonResults = JSON.stringify(existingData, null, 2);
 
-    fs.writeFile('fatures/results.json', jsonResults, 'utf8', (err) => {
+    fs.writeFile('public/results.json', jsonResults, 'utf8', (err) => {
       if (err) {
         console.error(err);
         res.status(500).send('Error writing to file');

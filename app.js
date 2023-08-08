@@ -34,11 +34,7 @@ app.get('/eng', (req, res) => {
 });
 
 app.get('/kube', (req, res) => {
-  const markdownFilePath = path.join(
-    __dirname,
-    'public',
-    'kubernates.md'
-  );
+  const markdownFilePath = path.join(__dirname, 'public', 'kubernates.md');
 
   // Read the .md file
   fs.readFile(markdownFilePath, 'utf8', (err, data) => {
@@ -92,11 +88,7 @@ app.get('/getTrainigHistory', (req, res) => {
 });
 
 app.get('/terminal', (req, res) => {
-  const markdownFilePath = path.join(
-    __dirname,
-    'public',
-    'terminal.md'
-  );
+  const markdownFilePath = path.join(__dirname, 'public', 'terminal.md');
 
   // Read the .md file
   fs.readFile(markdownFilePath, 'utf8', (err, data) => {

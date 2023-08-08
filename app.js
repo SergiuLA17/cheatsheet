@@ -34,7 +34,11 @@ app.get('/eng', (req, res) => {
 });
 
 app.get('/kube', (req, res) => {
-  const markdownFilePath = path.join(__dirname, 'public', 'kubernates.md');
+  const markdownFilePath = path.join(
+    __dirname,
+    'public',
+    'kubernates.md'
+  );
 
   // Read the .md file
   fs.readFile(markdownFilePath, 'utf8', (err, data) => {
@@ -49,6 +53,9 @@ app.get('/kube', (req, res) => {
       res.send(htmlContent);
     }
   });
+});
+app.get('/training', (req, res) => {
+  res.sendFile(__dirname + '/public/training.html'); // Change the path as needed
 });
 
 app.get('/home', (req, res) => {
@@ -79,15 +86,17 @@ app.get('/getTrainigHistory', (req, res) => {
 
     // Разбираем данные в JSON
     const existingData = JSON.parse(data);
-    
+
     res.send(existingData);
   });
 });
 
-
-
 app.get('/terminal', (req, res) => {
-  const markdownFilePath = path.join(__dirname, 'public', 'terminal.md');
+  const markdownFilePath = path.join(
+    __dirname,
+    'public',
+    'terminal.md'
+  );
 
   // Read the .md file
   fs.readFile(markdownFilePath, 'utf8', (err, data) => {
@@ -110,35 +119,35 @@ app.get('/eng', (req, res) => {
 
 app.post('/saveResults', (req, res) => {
   const results = req.body;
-  
+
   // Прочитать существующий файл
-  fs.readFile('results.json', 'utf8', (err, data) => {
+  fs.readFile('fatures/results.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error reading file');
+      return;
+    }
+
+    // Разбираем данные в JSON
+    const existingData = JSON.parse(data);
+
+    // Добавляем новые результаты в массив
+    existingData.push(results);
+
+    // Преобразовываем обратно в JSON
+    const jsonResults = JSON.stringify(existingData, null, 2);
+
+    // Записываем обновленные данные обратно в файл
+    fs.writeFile('fatures/results.json', jsonResults, 'utf8', (err) => {
       if (err) {
-          console.error(err);
-          res.status(500).send('Error reading file');
-          return;
+        console.error(err);
+        res.status(500).send('Error writing to file');
+        return;
       }
-      
-      // Разбираем данные в JSON
-      const existingData = JSON.parse(data);
-      
-      // Добавляем новые результаты в массив
-      existingData.push(results);
-      
-      // Преобразовываем обратно в JSON
-      const jsonResults = JSON.stringify(existingData, null, 2);
-      
-      // Записываем обновленные данные обратно в файл
-      fs.writeFile('results.json', jsonResults, 'utf8', (err) => {
-          if (err) {
-              console.error(err);
-              res.status(500).send('Error writing to file');
-              return;
-          }
-          
-          console.log('Results saved');
-          res.sendStatus(200);
-      });
+
+      console.log('Results saved');
+      res.sendStatus(200);
+    });
   });
 });
 

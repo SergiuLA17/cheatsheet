@@ -2,4 +2,4 @@
 
 echo "Updating code..."
 
-././build.sh
+././scripts/build.sh

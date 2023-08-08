@@ -11,9 +11,9 @@ docker push bloodysoon/cheatsheet:$NEW_VERSION
 # Stop and remove previous container
 docker stop cheatsheet
 docker rm cheatsheet
-././update-workload.sh
-kubectl apply -f Kubernetes/service.yaml
-kubectl apply -f Kubernetes/workload.yml
+././scripts/update-workload.sh
+kubectl apply -f kubernetes/service.yaml
+kubectl apply -f kubernetes/workload.yml
 
 # Run the new container
 docker run -d -p 4000:3000 --name cheatsheet bloodysoon/cheatsheet:$NEW_VERSION

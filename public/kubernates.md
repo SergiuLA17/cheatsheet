@@ -70,7 +70,7 @@ An image docker is a package that contains all the necessary files and settings 
 - **kubectl exec -it "pod name" sh"** : Accesarea instantei.
 - **kube % kubectl delete all --all --namespace default** : delete all
 - **docker image push bloodysoon/planner_api:0.1** : push images to docker hub
-- **docker tag planner-api bloodysoon/planner_api** :0.1 : tag the image
+- **docker tag planner-api bloodysoon/planner_api:0.1** : tag the image
 - **docker build -t planner-api .** : build the image
 
 ### Pod

@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Get the version from package.json
+# install brew install jq
 IMAGE_VERSION=$(jq -r '.version' package.json)
 
-# Update the deployment.yaml with the new version using Python
+
 python3 - <<EOF
 import re
 

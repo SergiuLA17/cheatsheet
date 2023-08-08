@@ -14,6 +14,3 @@ docker rm cheatsheet
 ././scripts/update-workload.sh
 kubectl apply -f kubernetes/service.yaml
 kubectl apply -f kubernetes/workload.yml
-
-# Run the new container
-docker run -d -p 4000:3000 --name cheatsheet bloodysoon/cheatsheet:$NEW_VERSION

@@ -14,4 +14,4 @@ This command shows all files in directories
     - **ls -lh** shows the files size and readable format 
 
  ## cat
- This command 
+

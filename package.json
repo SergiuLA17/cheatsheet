@@ -1,6 +1,6 @@
 {
   "name": "cheatsheet",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "dependencies": {
     "chart.js": "^4.3.3",
     "cors": "^2.8.5",

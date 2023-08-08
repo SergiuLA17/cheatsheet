@@ -68,7 +68,7 @@ app.get('/home', (req, res) => {
 });
 
 app.get('/getTrainigHistory', (req, res) => {
-  fs.readFile('results.json', 'utf8', (err, data) => {
+  fs.readFile('features/results.json', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error reading file');

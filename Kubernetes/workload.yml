@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
         - name: 'chatsheet'
-          image: 'bloodysoon/chatsheet:latest'
+          image: 'bloodysoon/cheatsheet:v0.3.0'

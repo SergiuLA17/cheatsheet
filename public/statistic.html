@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script>
+        var statistic = [
+            {
+                "flotari": 15,
+                "citire": 10,
+                "alergat": 5,
+                "mainele": 10,
+                "asezari": 10,
+                "data": "2020-10-10"
+            },
+            {
+                "flotari": 16,
+                "citire": 12,
+                "alergat": 4,
+                "mainele": 12,
+                "asezari": 25,
+                "data": "2020-10-10"
+            },
+            {
+                "flotari": 21,
+                "citire": 15,
+                "alergat": 6,
+                "mainele": 16,
+                "asezari": 30,
+                "data": "2020-10-10"
+            }
+        ];
+
+        var labels = statistic.map(entry => entry.data);
+        var flotariData = statistic.map(entry => entry.flotari);
+        var citireData = statistic.map(entry => entry.citire);
+        var alergatData = statistic.map(entry => entry.alergat);
+        var maineleData = statistic.map(entry => entry.mainele);
+        var asezariData = statistic.map(entry => entry.asezari);
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line', // Change the chart type to 'line'
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Flotari',
+                        data: flotariData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false // Use 'fill: false' for a line chart
+                    },
+                    {
+                        label: 'Citire',
+                        data: citireData,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'Alergat',
+                        data: alergatData,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'Mainele',
+                        data: maineleData,
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'Asezari',
+                        data: asezariData,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

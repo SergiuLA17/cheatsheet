@@ -42,7 +42,6 @@ app.get('/kube', (req, res) => {
 
       const htmlContent = marked(data);
 
-
       res.send(htmlContent);
     }
   });
@@ -53,6 +52,22 @@ app.get('/training', (req, res) => {
 
 app.get('/home', (req, res) => {
   const markdownFilePath = path.join(__dirname, 'public', 'index.md');
+
+  fs.readFile(markdownFilePath, 'utf8', (err, data) => {
+    if (err) {
+
+      res.status(500).send('Error reading the file.');
+    } else {
+
+      const htmlContent = marked(data);
+
+      res.send(htmlContent);
+    }
+  });
+});
+
+app.get('/nest', (req, res) => {
+  const markdownFilePath = path.join(__dirname, 'public', 'nestJS.md');
 
   fs.readFile(markdownFilePath, 'utf8', (err, data) => {
     if (err) {
